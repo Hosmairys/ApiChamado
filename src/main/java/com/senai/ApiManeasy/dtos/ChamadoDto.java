@@ -1,18 +1,18 @@
 package com.senai.ApiManeasy.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
 public record ChamadoDto(
-        @NotBlank String nome_solicitante,
-        String setor,
-        @NotBlank String chapa_usuario,
-        @NotBlank String nome_atendente,
-        String descricao_chamado,
         String anexo,
+        String chapa_usuario,
+        Date data_criacao,
         Date data_inicio,
-        Date data_termino
-
-
+        Date data_termino,
+        String descricao_chamado,
+        String nome_atendente,
+        String nome_solicitante,
+        String setor
 ) {}

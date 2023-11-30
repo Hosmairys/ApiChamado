@@ -1,7 +1,6 @@
 package com.senai.ApiManeasy.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +31,4 @@ public class ChamadoModel implements Serializable {
     private Date data_termino;
     private String descricao_chamado;
     private String anexo;
-
-
-
 }

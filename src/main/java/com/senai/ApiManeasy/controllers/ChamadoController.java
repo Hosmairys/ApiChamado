@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +24,15 @@ public class ChamadoController {
     ChamadoRepository chamadoRepository;
 
     @GetMapping
-    public ResponseEntity<List<ChamadoModel>> listarChamados(){
+    public ResponseEntity<List<ChamadoModel>> listarChamados() {
         return ResponseEntity.status(HttpStatus.OK).body(chamadoRepository.findAll());
     }
 
     @GetMapping("/{idChamado}")
-    public ResponseEntity<Object> buscarChamadoId(@PathVariable(value = "idChamado")UUID id){
+    public ResponseEntity<Object> buscarChamadoId(@PathVariable(value = "idChamado") UUID id) {
         Optional<ChamadoModel> chamadoBuscado = chamadoRepository.findById(id);
 
-        if (chamadoBuscado.isEmpty()){
+        if (chamadoBuscado.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Chamado no encontrado");
         }
 
@@ -39,12 +40,15 @@ public class ChamadoController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> cadastrarChamado(@RequestBody @Valid ChamadoDto dadosRecibidos){
-         ChamadoModel chamadoModel = new ChamadoModel();
+    public ResponseEntity<Object> cadastrarChamado(@RequestBody @Valid ChamadoDto dadosRecibidos) {
+
+        ChamadoModel chamadoModel = new ChamadoModel();
         BeanUtils.copyProperties(dadosRecibidos, chamadoModel);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(chamadoRepository.save(chamadoModel));
     }
+
+//    @PutMapping(value = "/idChamado")
 
 
 }
