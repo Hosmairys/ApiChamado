@@ -16,4 +16,5 @@ public record ChamadoDto(
         String nome_atendente,
         String nome_solicitante,
         String setor
+
 ) {}

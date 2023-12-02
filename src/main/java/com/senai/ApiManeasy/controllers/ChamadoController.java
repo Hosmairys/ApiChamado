@@ -7,15 +7,14 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.temporario.api.services.FileUploadService;
+import com.senai.ApiManeasy.service.FileUploadService;
 
 
-
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -48,7 +47,6 @@ public class ChamadoController {
         return ResponseEntity.status(HttpStatus.OK).body(chamadoBuscado.get());
     }
 
-    @PostMapping
     public ResponseEntity<Object> cadastrarChamado(@RequestBody @Valid ChamadoDto dadosRecibidos) {
 
         ChamadoModel chamadoModel = new ChamadoModel();
@@ -77,10 +75,22 @@ public class ChamadoController {
             throw new RuntimeException(e);
         }
 
-        usuarioModel.setUrl_img(urlImg);
+        chamadoModel.setUrl_img(urlImg);
 
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.save(usuarioModel));
+        return ResponseEntity.status(HttpStatus.OK).body(chamadoRepository.save(chamadoModel));
 
+    }
+
+
+    @DeleteMapping("/{id_chamado}")
+    public ResponseEntity<Object> deletarChamado(@PathVariable(value = "id_chamado") UUID id){
+        Optional<ChamadoModel> chamadoBuscado = chamadoRepository.findById(id);
+
+        if (chamadoBuscado.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Chamado não encontrado");
+        }
+        chamadoRepository.delete(chamadoBuscado.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Chamado deletado com sucesso!");
     }
 
 }

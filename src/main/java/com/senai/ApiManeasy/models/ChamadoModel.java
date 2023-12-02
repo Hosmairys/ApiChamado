@@ -31,4 +31,5 @@ public class ChamadoModel implements Serializable {
     private Date data_termino;
     private String descricao_chamado;
     private String anexo;
+    private String url_img;
 }

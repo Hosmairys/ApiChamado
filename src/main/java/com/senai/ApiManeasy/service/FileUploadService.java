@@ -1,4 +1,4 @@
-package com.temporario.api.services;
+package com.senai.ApiManeasy.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
